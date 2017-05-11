@@ -1,0 +1,9 @@
+﻿@model List<OnlineAlbum.Models.ImageModel>
+
+     @foreach (var item in Model)
+     {
+        <div>
+            <img src="@item.ImagePath" class="img-rounded" />
+        </div>
+     }
+

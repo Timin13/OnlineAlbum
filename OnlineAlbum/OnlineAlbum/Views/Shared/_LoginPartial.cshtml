@@ -1,0 +1,18 @@
+﻿@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {@class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            @Html.ActionLink("Hello " + User.Identity.Name + "!", "Manage", "Account", new { area = "" }, new {@class = "navbar-brand" } )
+            @Html.ActionLink("Log Off", "LogOff", "Account", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", new { area = "" }, new { @class = "navbar-brand" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })</li>
+    </ul>
+}

@@ -1,0 +1,8 @@
+﻿ .scrolling{
+     overflow-y:scroll;
+     width:230px;
+     height:500px;
+     border:solid 2px #333;
+     padding: 2px;
+     margin:5px;
+}

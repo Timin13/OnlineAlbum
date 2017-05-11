@@ -1,0 +1,18 @@
+﻿.containerForImg img {
+    max-height:480px;
+    max-width:100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.containerForImg {
+  width:70%;
+
+  display:block;
+  margin: 5px auto;
+}
+
+.deleteImage{
+    display:block;
+    margin: 5px auto;
+}

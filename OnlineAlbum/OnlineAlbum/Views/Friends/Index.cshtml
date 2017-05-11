@@ -1,0 +1,26 @@
+﻿@model OnlineAlbum.Models.UserProfile
+@{
+    ViewBag.Title = "Add Friend";
+
+    var options = new AjaxOptions()
+    {
+        UpdateTargetId = "UpdateData",
+        LoadingElementId = "Loading"
+    };
+}
+
+@using (Ajax.BeginForm("SearchPeople", options))
+{
+    <input type="text" name="Name" placeholder="Search..." class="input-sm" />
+        <button type="submit" class="btn btn-default">Search</button>
+}
+
+<div id="UpdateData">
+    <img id="Loading" src="~/Content/spinner.gif" style="display:none;" />
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}

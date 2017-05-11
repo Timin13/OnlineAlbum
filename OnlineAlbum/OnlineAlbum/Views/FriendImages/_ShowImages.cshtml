@@ -1,0 +1,56 @@
+﻿@model List<OnlineAlbum.Models.ImageModel>
+@using OnlineAlbum.Core
+@{ 
+    var options = new AjaxOptions()
+    {
+        UpdateTargetId = "UpdateData",
+        LoadingElementId = "Loading"
+    };
+}
+@if (Model != null)
+{
+<div class="list-inline">
+    <img src="~/Content/UserAvatar.png" style="height:60px" />
+    <span>
+        @Model.First().UserProfiles.UserName
+    </span>
+</div>
+<div>
+    @Html.ActionLink("UnSubscribe", "UnSubscribe", "Friends", new { name = Model.First().UserProfiles.UserName }, new { @class = "btn btn-danger", FormMethod.Post })
+    @Html.ActionLink("Back", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary" })
+</div>          
+
+
+    <div class="col-lg-2 col-md-2 col-sm-2 scrolling">
+        @foreach (var item in Model)
+        {
+            <div class="media-left" style="float:left; padding:2px">
+                @Ajax.ImageActionLink(@item.ImagePath, "BigImage",
+                new { id = item.ImageId },
+                new AjaxOptions { UpdateTargetId = "UpdateData" },
+                new { @class = "img-rounded", title = "Picture", style = "width:200px" })
+            </div>
+        }
+    </div>
+
+    using (Ajax.BeginForm(options))
+    {
+        <div class="col-lg-10 col-md-10 col-sm-10 right containerForImg">
+            <div id="UpdateData">
+                @Html.Action("BigImage", new { id = Model })
+                <img id="Loading" src="~/Content/spinner.gif" style="display:none;" />
+            </div>
+        </div>
+    }
+}
+else
+{
+<div>
+    <span>
+        No images at all!
+        @Html.ActionLink("Back", "Index", "Home", new { area = "" }, new { @class = "btn btn-primary"})
+    </span>
+</div>
+}
+
+  

@@ -1,0 +1,33 @@
+﻿@model List<OnlineAlbum.Models.FriendList>
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+
+@if (Request.IsAuthenticated)
+{
+    @Html.ActionLink("Add Image", "Index", "Image", new { area = "" }, new { @class = "btn btn-primary" })
+
+    @Html.ActionLink("Find Friend", "Index", "Friends", new { area = "" }, new { @class = "btn btn-primary" })
+
+
+    if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="list-inline">
+                <img src="~/Content/UserAvatar.png" style="height:60px" />
+                @Html.ActionLink(@item.FriendName, "Index", "FriendImages", new { name = item.FriendName }, new { @class = "btn" })
+            </div>
+                <div>
+                    @Html.ActionLink("UnSubscribe", "UnSubscribe", "Friends", new { name = item.FriendName }, new { @class = "btn btn-danger", FormMethod.Post })
+                </div>
+                <br />
+        }
+    }
+    else
+    {
+        <span>You haven't got any friend yet</span>
+    }
+}

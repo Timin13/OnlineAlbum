@@ -1,0 +1,27 @@
+﻿@model OnlineAlbum.Models.UserProfile
+
+@{ 
+    var options = new AjaxOptions()
+    {
+        UpdateTargetId = "AddFriendButton",
+        HttpMethod = "Post"
+    };
+}
+
+@if (Model != null)
+{
+    <div>
+            @using (Ajax.BeginForm("SubscribeMenu", options))
+            {
+                <img src="~/Content/UserAvatar.png" style="height:60px" />
+                @Model.UserName
+                <div id="AddFriendButton">
+                    @Html.Action("SubscribeMenu", new { name = Model.UserName })
+                </div>
+            }
+    </div>
+}else{
+    <span>
+        No match allowed
+    </span>
+}
