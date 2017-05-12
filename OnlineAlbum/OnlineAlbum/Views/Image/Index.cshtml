@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm("Upload", "Image", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-inline"}))
 {                  
-            <input type="file" value="Choose File" name="upload" class="btn btn-primary" style="margin:5px 0px 5px 0px"/>
+            <input type="file" value="Choose File" name="upload" accept="image/*" class="btn btn-primary" style="margin:5px 0px 5px 0px"/>
             <input type="text" class="input-sm" placeholder="Title..." name="description" />
             <input type="submit" value="Upload" class="btn btn-success"/>
 }

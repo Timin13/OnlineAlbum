@@ -2,7 +2,7 @@
 
      @foreach (var item in Model)
      {
-         @Html.ActionLink("Delete", "Delete", new { id = item.ImageId}, htmlAttributes: new { @class = "btn btn-danger" })
+         @Html.ActionLink("Delete", "DeleteView", new { id = item.ImageId}, htmlAttributes: new { @class = "btn btn-danger" })
         <div>
             <img src="@item.ImagePath" class="img-rounded" />
         </div>

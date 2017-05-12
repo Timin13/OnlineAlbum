@@ -15,8 +15,10 @@ namespace OnlineAlbum.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                var friendList = db.UserProfiles.Where(u => u.UserName == User.Identity.Name).First().FriendList;
-
+                var friendList = db.UserProfiles.
+                        Where(u => u.UserName == User.Identity.Name).
+                            First().
+                                FriendList;
                 if (friendList == null) return View();
                 return View(friendList);
             }

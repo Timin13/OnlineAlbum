@@ -19,12 +19,11 @@ namespace OnlineAlbum.Controllers
         // GET: Image
         public ActionResult Index()
         {
-            var images = db.UserProfiles.Where(u => u.UserName == User.Identity.Name).
-                FirstOrDefault().
-                Images.OrderByDescending(d=>d.ImageId);
-
+            var images = UserImages();
+            
             if(images == null) return View();
-            return View(images.ToList());                     
+
+            return View(images.OrderByDescending(d => d.ImageId).ToList());                     
         }
 
         [HttpPost]
@@ -36,16 +35,15 @@ namespace OnlineAlbum.Controllers
                 string filename = "Image" + User.Identity.Name + "_" + ran.Next(1000000) + ".jpg";
                 upload.SaveAs(Server.MapPath("~/Content/Img/" + filename));
 
-                db.UserProfiles.Where(u => u.UserName == User.Identity.Name).
-                    FirstOrDefault().
-                    Images.
-                    Add(new ImageModel()
-                    {
-                        ImageDescription = description,
-                        ImagePath = "/Content/Img/" + filename,
-                        Rating = 0,
-                        UploadDate = DateTime.Now
-                    });
+                var image = UserImages();
+
+                image.Add(new ImageModel()
+                {
+                    ImageDescription = description,
+                    ImagePath = "/Content/Img/" + filename,
+                    Rating = 0,
+                    UploadDate = DateTime.Now
+                });
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
@@ -53,29 +51,27 @@ namespace OnlineAlbum.Controllers
 
         public ActionResult BigImage(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
-                var image = db.UserProfiles.
-                    Where(u => u.UserName == User.Identity.Name).
-                    FirstOrDefault().
-                    Images.
-                    OrderByDescending(d => d.ImageId).
-                    FirstOrDefault();
+                var image = UserImages().OrderByDescending(d => d.ImageId).FirstOrDefault();
+
                 if (image != null) id = image.ImageId;
             }
             var data = db.Images.Where(i => i.ImageId == id);
-            
+
             return PartialView(data.ToList());
         }
 
         [HttpGet]
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteView(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ImageModel image = db.Images.Find(id);
+
+            var image = DeleteImage(id);
+
             if (image == null)
             {
                 return HttpNotFound();
@@ -86,10 +82,31 @@ namespace OnlineAlbum.Controllers
         [HttpPost]
         public ActionResult DeleteConfirm(int id)
         {
-            ImageModel image = db.Images.Find(id);
+            var image = DeleteImage(id);
+
             db.Images.Remove(image);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+    
+        private List<ImageModel> UserImages()
+        {
+            var images = db.UserProfiles.
+                    Where(u => u.UserName == User.Identity.Name).
+                        FirstOrDefault().
+                            Images;
+            return (images);
+        }
+
+        private ImageModel DeleteImage(int? id)
+        {
+            ImageModel image = db.Images.Find(id);
+
+            if (image.UserProfiles.UserName == User.Identity.Name)
+            {
+                return (image);
+            }
+            return (null);
         }
 
         protected override void Dispose(bool disposing)

@@ -126,6 +126,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\OnlineAlbum.mdf" />
+    <Content Include="App_Data\OnlineAlbum_log.ldf">
+      <DependentUpon>OnlineAlbum.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -200,7 +204,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Image\BigImage.cshtml" />
-    <Content Include="Views\Image\Delete.cshtml" />
+    <Content Include="Views\Image\DeleteView.cshtml" />
     <Content Include="Views\Friends\Index.cshtml" />
     <Content Include="Views\Friends\SearchPeople.cshtml" />
     <Content Include="Views\Friends\_Subscribe.cshtml" />
@@ -216,7 +220,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\Img\" />
   </ItemGroup>
   <ItemGroup>

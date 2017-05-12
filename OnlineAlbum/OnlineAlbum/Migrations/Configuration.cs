@@ -4,28 +4,24 @@ namespace OnlineAlbum.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using OnlineAlbum.Models;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<OnlineAlbum.Models.DatabaseContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DatabaseContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(OnlineAlbum.Models.DatabaseContext context)
+        protected override void Seed(DatabaseContext db)
         {
-            //  This method will be called after migrating to the latest version.
+            UserProfile Admin = new UserProfile()
+            {
+                UserName = "Admin"
+            };
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            db.UserProfiles.Add(Admin);
+            db.SaveChanges();
         }
     }
 }

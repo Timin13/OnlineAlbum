@@ -27,19 +27,13 @@ namespace OnlineAlbum.Controllers
             
             var searching = db.UserProfiles.Where(u => u.UserName == name);
 
-            if (searching.Any() == false)
-            {
-                return PartialView();
-            }
-            return PartialView(searching.First());
+            return PartialView(searching.FirstOrDefault());
         }
 
         public ActionResult SubscribeMenu(string name)
         {
-            var subscribe = db.UserProfiles.
-            Where(u => u.UserName == User.Identity.Name).
-            First().
-            FriendList;
+            var subscribe = UserFriendList(name);
+
             if (db.UserProfiles.Where( n => n.UserName == name).Any())
             {
                 if (subscribe.Where(n => n.FriendName == name).Any())
@@ -49,7 +43,7 @@ namespace OnlineAlbum.Controllers
                 else
                 {
                     return PartialView("_Subscribe", name);
-                } 
+                }  
             }
             return RedirectToAction("Index");
         }
@@ -57,14 +51,13 @@ namespace OnlineAlbum.Controllers
        
         public ActionResult Subscribe(string name)
         {
-            db.UserProfiles.
-            Where(u => u.UserName == User.Identity.Name).
-            First().
-            FriendList.
-            Add(new FriendList()
-            {
-                FriendName = name
-            });
+            var subscribe = UserFriendList(name);
+
+            subscribe.
+                Add(new FriendList()
+                    {
+                        FriendName = name
+                    });
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
@@ -76,6 +69,15 @@ namespace OnlineAlbum.Controllers
             db.FriendList.Remove(friend);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");
+        }
+
+        private List<FriendList> UserFriendList(string name)
+        {
+            var subscribe = db.UserProfiles.
+            Where(u => u.UserName == User.Identity.Name).
+                First().
+                    FriendList;
+            return (subscribe);
         }
     }
 }
