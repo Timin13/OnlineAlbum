@@ -212,6 +212,7 @@
     <Content Include="Views\FriendImages\Index.cshtml" />
     <Content Include="Views\FriendImages\_ShowImages.cshtml" />
     <Content Include="Views\FriendImages\BigImage.cshtml" />
+    <Content Include="Views\Friends\SubscribeMenu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

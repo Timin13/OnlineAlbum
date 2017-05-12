@@ -84,6 +84,9 @@ namespace OnlineAlbum.Controllers
         {
             var image = DeleteImage(id);
 
+            FileInfo file = new FileInfo(Server.MapPath(image.ImagePath));
+            if (file.Exists) file.Delete();
+
             db.Images.Remove(image);
             db.SaveChanges();
             return RedirectToAction("Index");

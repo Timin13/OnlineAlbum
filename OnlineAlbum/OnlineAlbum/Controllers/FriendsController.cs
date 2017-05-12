@@ -32,11 +32,11 @@ namespace OnlineAlbum.Controllers
 
         public ActionResult SubscribeMenu(string name)
         {
-            var subscribe = UserFriendList(name);
+            var friendList = UserFriendList(name);
 
-            if (db.UserProfiles.Where( n => n.UserName == name).Any())
+            if (db.UserProfiles.Where( n => n.UserName == name).Any() && name != User.Identity.Name)
             {
-                if (subscribe.Where(n => n.FriendName == name).Any())
+                if (friendList.Where(n => n.FriendName == name).Any())
                 {
                     return PartialView("_UnSubscribe", name);
                 }
@@ -45,7 +45,7 @@ namespace OnlineAlbum.Controllers
                     return PartialView("_Subscribe", name);
                 }  
             }
-            return RedirectToAction("Index");
+            return PartialView();
         }
 
        
