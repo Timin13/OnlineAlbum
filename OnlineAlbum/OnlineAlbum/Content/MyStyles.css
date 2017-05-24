@@ -22,3 +22,9 @@ body {
 .footer {
   flex: 0 0 auto;
 }
+.wrapper, a{
+    margin:5px
+}
+.search{
+    margin:50px 0px
+}
