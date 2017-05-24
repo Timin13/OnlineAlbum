@@ -6,7 +6,8 @@
         {
             @Html.Hidden("id", Model.ImageId)
             <div class="containerForImg">
-                <img src="@Model.ImagePath" style="max-width:60%" /> 
+                @Html.Raw("<img style='max-width:60%' src=\"data:image/jpeg;base64,"
+                                + Convert.ToBase64String(Model.Content) + "\" />")
                 <div align="center" style="padding:5px">
                     <input type="submit" value="Delete" class="btn btn-danger" />
                     @Html.ActionLink("Cancel", "Index", new { area = "" }, htmlAttributes: new { @class = "btn btn-info" })

@@ -5,8 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using OnlineAlbum.Models;
-using System.Web.Security;
-using Microsoft.AspNet.Identity;
+using System.Drawing;
 using System.Net;
 
 namespace OnlineAlbum.Controllers
@@ -29,19 +28,17 @@ namespace OnlineAlbum.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload, string description)
         {
+
             if (upload != null)
             {
+                var currentUserImage = UserImages();
                 Random ran = new Random();
                 string filename = "Image" + User.Identity.Name + "_" + ran.Next(1000000) + ".jpg";
-                upload.SaveAs(Server.MapPath("~/Content/Img/" + filename));
-
-                var image = UserImages();
-
-                image.Add(new ImageModel()
+                
+                currentUserImage.Add(new ImageModel()
                 {
                     ImageDescription = description,
-                    ImagePath = "/Content/Img/" + filename,
-                    Rating = 0,
+                    Content = imageToByteArray(upload),
                     UploadDate = DateTime.Now
                 });
                 db.SaveChanges();
@@ -83,15 +80,19 @@ namespace OnlineAlbum.Controllers
         public ActionResult DeleteConfirm(int id)
         {
             var image = DeleteImage(id);
-
-            FileInfo file = new FileInfo(Server.MapPath(image.ImagePath));
-            if (file.Exists) file.Delete();
-
             db.Images.Remove(image);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-    
+
+        public byte[] imageToByteArray(HttpPostedFileBase source)
+        {
+            byte[] destination = new byte[source.ContentLength];
+            source.InputStream.Position = 0;
+            source.InputStream.Read(destination, 0, source.ContentLength);
+            return destination;
+        }
+
         private List<ImageModel> UserImages()
         {
             var images = db.UserProfiles.

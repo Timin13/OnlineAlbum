@@ -17,8 +17,8 @@ namespace OnlineAlbum.Models
 
         [DataType(DataType.DateTime)]
         public DateTime UploadDate { get; set; }
-        public string ImagePath { get; set; }
-        public int Rating { get; set; }
+        
+        public byte[] Content { get; set; }
 
         public virtual UserProfile UserProfiles { get; set; }
     }

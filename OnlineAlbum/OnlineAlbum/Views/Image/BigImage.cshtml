@@ -4,7 +4,7 @@
      {
          @Html.ActionLink("Delete", "DeleteView", new { id = item.ImageId}, htmlAttributes: new { @class = "btn btn-danger" })
         <div>
-            <img src="@item.ImagePath" class="img-rounded" />
+            @Html.Raw("<img src=\"data:image/jpeg;base64,"
+                                + Convert.ToBase64String(item.Content) + "\" />")
         </div>
      }
-

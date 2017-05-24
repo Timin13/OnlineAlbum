@@ -17,7 +17,7 @@ namespace OnlineAlbum.Controllers
             {
                 var friendList = db.UserProfiles.
                         Where(u => u.UserName == User.Identity.Name).
-                            First().
+                            FirstOrDefault().
                                 FriendList;
                 if (friendList == null) return View();
                 return View(friendList);

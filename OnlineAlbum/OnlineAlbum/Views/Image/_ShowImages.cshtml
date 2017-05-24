@@ -14,7 +14,7 @@
         @foreach (var item in Model)
         {
             <div class="media-left" style="float:left; padding:2px">
-                @Ajax.ImageActionLink(@item.ImagePath, "BigImage",
+                @Ajax.ImageActionLink(@item.Content, "BigImage",
            new { id = item.ImageId },
            new AjaxOptions { UpdateTargetId = "UpdateData" },
            new { @class = "img-rounded", title = "Picture", style = "width:200px" })
